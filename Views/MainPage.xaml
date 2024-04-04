@@ -1,56 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ToDoApp.MainPage"
+             x:Class="ToDoApp.Views.MainPage"
              xmlns:viewmodel="clr-namespace:ToDoApp.ViewModels"
              x:DataType="viewmodel:MainViewModel">
 
     <ScrollView>
         <VerticalStackLayout
-            Padding="30,0"
+            Padding="30"
             Spacing="25">
 
-            <Grid RowDefinitions="10, Auto, *"
-                  ColumnDefinitions=".75*, .25*"
-                  ColumnSpacing="10"
-                  Padding="0, 20, 0, 5">
-                <Entry
-                    Grid.Row="1"
-                    Placeholder="Enter the task..." 
-                    Text="{Binding Text}"
-                    FontSize="24"/>
-
+            <Frame Padding="0" Background="#eee">
                 <Button
-                    Command="{Binding AddItemCommand}"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Text="Add"
+                    Clicked="DisplayPrompt"
+                    Text="Add task"
                     FontSize="20"
                     FontFamily="OpenSans-Semibold"
-                    HorizontalOptions="Center"/>
-
-                <CollectionView ItemsSource="{Binding Items}"
-                                Grid.Row="2" Grid.ColumnSpan="2">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Type x:String}">
-                            <SwipeView>
-                                <SwipeView.RightItems>
-                                    <SwipeItem Text="Delete"
+                    HorizontalOptions="FillAndExpand"
+                    Background="Transparent"
+                    TextColor="Black"/>
+            </Frame>
+            
+            <CollectionView ItemsSource="{Binding Tasks}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type x:String}">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItem Text="Delete"
                                                BackgroundColor="Red"
-                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=RemoveItemCommand}"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=RemoveTaskCommand}"
                                                CommandParameter="{Binding .}"/>
-                                </SwipeView.RightItems>
-                                <Grid Padding="0, 5">
-                                    <Frame>
-                                        <Label Text="{Binding .}"
+                            </SwipeView.RightItems>
+                            <Grid Padding="0, 5">
+                                <Frame>
+                                    <Label Text="{Binding .}"
                                                FontSize="24"/>
-                                    </Frame>
-                                </Grid>
-                            </SwipeView>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Grid>
+                                </Frame>
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
 

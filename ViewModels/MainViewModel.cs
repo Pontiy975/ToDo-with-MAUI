@@ -6,31 +6,22 @@ namespace ToDoApp.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-	[ObservableProperty] private ObservableCollection<string> _items;
-
-	[ObservableProperty] private string _text;
+	[ObservableProperty] private ObservableCollection<string> _tasks;
 
 	public MainViewModel()
 	{
-		_items = new ObservableCollection<string>();
-		_text = string.Empty;
+		_tasks = new ObservableCollection<string>();
+	}
+
+	public void AddTask(string task)
+	{
+		Tasks.Add(task);
 	}
 
 	[RelayCommand]
-	public void AddItem()
+	public void RemoveTask(string task)
 	{
-		if (string.IsNullOrEmpty(Text))
-			return;
-
-		Items.Add(Text);
-
-		Text = string.Empty;
-	}
-
-	[RelayCommand]
-	public void RemoveItem(string item)
-	{
-		if (Items.Contains(item))
-			Items.Remove(item);
+		if (Tasks.Contains(task))
+			Tasks.Remove(task);
 	}
 }

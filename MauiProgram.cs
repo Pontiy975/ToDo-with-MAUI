@@ -1,14 +1,16 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ToDoApp.ViewModels;
+using ToDoApp.Views;
 
 namespace ToDoApp
 {
     public static class MauiProgram
     {
+        private static MauiAppBuilder _builder = MauiApp.CreateBuilder();
+
         public static MauiApp CreateMauiApp()
         {
-            var builder = MauiApp.CreateBuilder();
-            builder
+            _builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
@@ -16,10 +18,19 @@ namespace ToDoApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddSingleton<MainViewModel>();
 
-            return builder.Build();
+            InitPage<MainPage, MainViewModel>(_builder.Services.AddSingleton);
+            InitPage<ProfilesPage, ProfilesViewModel>(_builder.Services.AddTransient);
+
+            return _builder.Build();
+        }
+
+        private static void InitPage<T, S>(Func<Type, IServiceCollection> registerService)
+            where T : ContentPage
+            where S : ObservableObject
+        {
+            registerService(typeof(T));
+            registerService(typeof(S));
         }
     }
 }
