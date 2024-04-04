@@ -7,19 +7,15 @@
              x:DataType="viewmodel:ProfilesViewModel">
 
     <ScrollView>
-        <VerticalStackLayout
-         Padding="30"
-         Spacing="25">
-
+        <VerticalStackLayout Padding="30" Spacing="25">
             <Frame Padding="0" Background="#eee">
-                <Button
-                 Clicked="DisplayPrompt"
-                 Text="Add profile"
-                 FontSize="20"
-                 FontFamily="OpenSans-Semibold"
-                 HorizontalOptions="FillAndExpand"
-                 Background="Transparent"
-                 TextColor="Black"/>
+                <Button Clicked="DisplayPrompt"
+                        Text="Add profile"
+                        FontSize="20"
+                        FontFamily="OpenSans-Semibold"
+                        HorizontalOptions="FillAndExpand"
+                        Background="Transparent"
+                        TextColor="Black"/>
             </Frame>
 
             <CollectionView ItemsSource="{Binding Profiles}">
@@ -28,14 +24,13 @@
                         <SwipeView>
                             <SwipeView.RightItems>
                                 <SwipeItem Text="Delete"
-                                            BackgroundColor="Red"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfilesViewModel}}, Path=RemoveProfileCommand}"
-                                            CommandParameter="{Binding ID}"/>
+                                           BackgroundColor="Red"
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfilesViewModel}}, Path=RemoveProfileCommand}"
+                                           CommandParameter="{Binding ID}"/>
                             </SwipeView.RightItems>
                             <Grid Padding="0, 5">
                                 <Frame>
-                                    <Label Text="{Binding Name}"
-                                            FontSize="24"/>
+                                    <Label Text="{Binding Name}" FontSize="24"/>
                                 </Frame>
                             </Grid>
                         </SwipeView>
