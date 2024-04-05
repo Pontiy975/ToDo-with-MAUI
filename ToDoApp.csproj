@@ -64,6 +64,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\TaskListPage.xaml.cs">
+	    <DependentUpon>TaskListPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Views\ProfilesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

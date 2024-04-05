@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ToDoApp.Views.MainPage"
+             x:Class="ToDoApp.Views.TaskListPage"
              xmlns:viewmodel="clr-namespace:ToDoApp.ViewModels"
-             x:DataType="viewmodel:MainViewModel">
+             x:DataType="viewmodel:TaskListViewModel">
 
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25">
@@ -17,19 +17,19 @@
                         TextColor="Black"/>
             </Frame>
             
-            <CollectionView ItemsSource="{Binding Tasks}">
+            <CollectionView ItemsSource="{Binding CurrentProfile.Tasks}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type x:String}">
+                    <DataTemplate x:DataType="viewmodel:Task">
                         <SwipeView>
                             <SwipeView.RightItems>
                                 <SwipeItem Text="Delete"
                                            BackgroundColor="Red"
-                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=RemoveTaskCommand}"
-                                           CommandParameter="{Binding .}"/>
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TaskListViewModel}}, Path=RemoveTaskCommand}"
+                                           CommandParameter="{Binding ID}"/>
                             </SwipeView.RightItems>
                             <Grid Padding="0, 5">
                                 <Frame>
-                                    <Label Text="{Binding .}" FontSize="24"/>
+                                    <Label Text="{Binding Text}" FontSize="24"/>
                                 </Frame>
                             </Grid>
                         </SwipeView>

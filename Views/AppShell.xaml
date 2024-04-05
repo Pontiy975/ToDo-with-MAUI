@@ -8,17 +8,16 @@
     Title="ToDoApp"
     BackgroundColor="#ccc">
 
-    <FlyoutItem Title="Main">
-        <ShellContent
-            Title="ToDo App"
-            ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage" />
-    </FlyoutItem>
-
     <FlyoutItem Title="Profiles">
         <ShellContent
             Title="Profiles"
             ContentTemplate="{DataTemplate local:ProfilesPage}"
             Route="ProfilesPage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Tasks">
+        <ShellContent
+            Title="ToDo List"
+            ContentTemplate="{DataTemplate local:TaskListPage}"
+            Route="TaskListPage" />
     </FlyoutItem>
 </Shell>

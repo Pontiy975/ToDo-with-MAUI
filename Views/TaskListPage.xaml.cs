@@ -2,9 +2,9 @@
 
 namespace ToDoApp.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class TaskListPage : ContentPage
     {
-        public MainPage(MainViewModel vm)
+        public TaskListPage(TaskListViewModel vm)
         {
             InitializeComponent();
             BindingContext = vm;
@@ -17,7 +17,7 @@ namespace ToDoApp.Views
             if (task is null || string.IsNullOrEmpty(task))
                 return;
 
-            ((MainViewModel)BindingContext).AddTask(task);
+            ((TaskListViewModel)BindingContext).AddTask(task);
         }
     }
 

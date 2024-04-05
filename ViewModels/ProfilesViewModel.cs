@@ -1,6 +1,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using ToDoApp.Views;
 
 namespace ToDoApp.ViewModels;
 
@@ -15,11 +17,12 @@ public partial class ProfilesViewModel : ObservableObject
 
 	public void AddProfile(string profileName)
 	{
-		Profiles.Add(new Profile { ID = Profiles.Count, Name = profileName });
+		Profile profile = new Profile { ID = Profiles.Count, Name = profileName };
+        Profiles.Add(profile);
 	}
 
     [RelayCommand]
-    public void RemoveProfile(int id)
+    private void RemoveProfile(int id)
     {
         for (int i = 0; i < Profiles.Count; i++)
 		{
@@ -30,10 +33,31 @@ public partial class ProfilesViewModel : ObservableObject
 			}
 		}
     }
+
+	[RelayCommand]
+	private async System.Threading.Tasks.Task OpenProfile(int profileID)
+	{
+		for (int i = 0; i < Profiles.Count; i++)
+		{
+			if (Profiles[i].ID == profileID)
+			{
+
+				await Shell.Current.GoToAsync(nameof(TaskListPage), new Dictionary<string, object>
+				{
+					{ "profile", Profiles[i] }
+                });
+
+                break;
+            }
+        }
+	}
 }
 
+[Serializable]
 public class Profile
 {
 	public int ID { get; set; }
 	public string Name { get; set; } = string.Empty;
+
+	public List<Task> Tasks { get; set; } = new List<Task>();
 }

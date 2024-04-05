@@ -7,7 +7,7 @@ namespace ToDoApp
     public static class MauiProgram
     {
         private static MauiAppBuilder _builder = MauiApp.CreateBuilder();
-
+        
         public static MauiApp CreateMauiApp()
         {
             _builder
@@ -19,7 +19,7 @@ namespace ToDoApp
                 });
 
 
-            InitPage<MainPage, MainViewModel>(_builder.Services.AddSingleton);
+            InitPage<TaskListPage, TaskListViewModel>(_builder.Services.AddSingleton);
             InitPage<ProfilesPage, ProfilesViewModel>(_builder.Services.AddTransient);
 
             return _builder.Build();

@@ -9,6 +9,7 @@ namespace ToDoApp
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(ProfilesPage), typeof(ProfilesPage));
+            Routing.RegisterRoute(nameof(TaskListPage), typeof(TaskListPage));
         }
     }
 }

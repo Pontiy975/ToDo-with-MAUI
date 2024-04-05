@@ -30,7 +30,12 @@
                             </SwipeView.RightItems>
                             <Grid Padding="0, 5">
                                 <Frame>
-                                    <Label Text="{Binding Name}" FontSize="24"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfilesViewModel}}, Path=OpenProfileCommand}"
+                                            CommandParameter="{Binding ID}"/>
+                                    </Frame.GestureRecognizers>
+                                        <Label Text="{Binding Name}" FontSize="24"/>
                                 </Frame>
                             </Grid>
                         </SwipeView>
