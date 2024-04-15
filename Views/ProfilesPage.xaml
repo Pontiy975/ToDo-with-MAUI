@@ -1,47 +1,106 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ToDoApp.Views.ProfilesPage"
-             Title="ProfilesPage"
+             Title="Profiles"
+             xmlns:model="clr-namespace:ToDoApp.Models"
              xmlns:viewmodel="clr-namespace:ToDoApp.ViewModels"
-             x:DataType="viewmodel:ProfilesViewModel">
+             x:DataType="viewmodel:ProfilesViewModel"
+             x:Class="ToDoApp.Views.ProfilesPage">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="25">
-            <Frame Padding="0" Background="#eee">
-                <Button Clicked="DisplayPrompt"
-                        Text="Add profile"
-                        FontSize="20"
-                        FontFamily="OpenSans-Semibold"
-                        HorizontalOptions="FillAndExpand"
-                        Background="Transparent"
-                        TextColor="Black"/>
-            </Frame>
+    <VerticalStackLayout Padding="30" Spacing="25">
+        <Border>
+            <Button Text="Add profile"
+                    Clicked="DisplayPrompt"
+                    Background="Transparent"
+                    TextColor="Black"
+                    FontSize="20"
+                    FontFamily="OpenSans-Semibold"
+                    HorizontalOptions="FillAndExpand"/>
+        </Border>
 
-            <CollectionView ItemsSource="{Binding Profiles}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="viewmodel:Profile">
-                        <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItem Text="Delete"
-                                           BackgroundColor="Red"
-                                           Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfilesViewModel}}, Path=RemoveProfileCommand}"
-                                           CommandParameter="{Binding ID}"/>
-                            </SwipeView.RightItems>
-                            <Grid Padding="0, 5">
-                                <Frame>
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfilesViewModel}}, Path=OpenProfileCommand}"
-                                            CommandParameter="{Binding ID}"/>
-                                    </Frame.GestureRecognizers>
-                                        <Label Text="{Binding Name}" FontSize="24"/>
-                                </Frame>
-                            </Grid>
-                        </SwipeView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
+        <CollectionView ItemsSource="{Binding Profiles}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Profile">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItem Text="Delete"
+                                BackgroundColor="Red"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfilesViewModel}}, Path=RemoveProfileCommand}"
+                                CommandParameter="{Binding ID}"/>
+                        </SwipeView.RightItems>
+                        <Grid Padding="0, 5">
+                            <Frame>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfilesViewModel}}, Path=OpenProfileCommand}"
+                                        CommandParameter="{Binding ID}"/>
+                                </Frame.GestureRecognizers>
+
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding Name}" FontSize="24"/>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+
+
+
+
+        <!--<CollectionView ItemsSource="{Binding Profiles}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Profile">
+                    <Frame HeightRequest="10">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Name}" FontSize="24"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+        </CollectionView>-->
+            <!--<VerticalStackLayout Padding="30" Spacing="25">
+                    <Frame Padding="0" Background="#eee">
+                        <Button Clicked="DisplayPrompt"
+                                Text="Add profile"
+                                FontSize="20"
+                                FontFamily="OpenSans-Semibold"
+                                HorizontalOptions="FillAndExpand"
+                                Background="Transparent"
+                                TextColor="Black"/>
+                    </Frame>
+
+                    <CollectionView ItemsSource="{Binding Profiles}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodel">
+                                <SwipeView>
+                                    <SwipeView.RightItems>
+                                        <SwipeItem Text="Delete"
+                                                   BackgroundColor="Red"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfilesViewModel}}, Path=RemoveProfileCommand}"
+                                                   CommandParameter="{Binding ID}"/>
+                                    </SwipeView.RightItems>
+                                    <Grid Padding="0, 5">
+                                        <Frame>
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfilesViewModel}}, Path=OpenProfileCommand}"
+                                                    CommandParameter="{Binding ID}"/>
+                                            </Frame.GestureRecognizers>
+                                    
+                                            <VerticalStackLayout>
+                                                <Label Text="{Binding Name}" FontSize="24"/>
+                                            </VerticalStackLayout>
+                                        </Frame>
+                                    </Grid>
+                                </SwipeView>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>-->
+    </VerticalStackLayout>
 </ContentPage>

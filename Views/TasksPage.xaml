@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Tasks"
+             xmlns:model="clr-namespace:ToDoApp.Models"
+             xmlns:viewmodel="clr-namespace:ToDoApp.ViewModels"
+             x:DataType="viewmodel:TasksViewModel"
+             x:Class="ToDoApp.Views.TasksPage">
+
+    <VerticalStackLayout Padding="30" Spacing="25">
+        <Border>
+            <Button Text="Add task"
+                Clicked="DisplayPrompt"
+                Background="Transparent"
+                TextColor="Black"
+                FontSize="20"
+                FontFamily="OpenSans-Semibold"
+                HorizontalOptions="FillAndExpand"/>
+        </Border>
+
+        <CollectionView ItemsSource="{Binding CurrentProfile.Tasks}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:ToDoTask">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItem Text="Delete"
+                                BackgroundColor="Red"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:TasksViewModel}}, Path=RemoveTaskCommand}"
+                                CommandParameter="{Binding ID}"/>
+                        </SwipeView.RightItems>
+                        <Grid Padding="0, 5">
+                            <Frame>
+                                <!--<Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfilesViewModel}}, Path=OpenProfileCommand}"
+                            CommandParameter="{Binding ID}"/>
+                            </Frame.GestureRecognizers>-->
+
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding Title}" FontSize="24"/>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

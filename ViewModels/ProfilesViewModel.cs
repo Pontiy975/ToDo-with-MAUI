@@ -1,63 +1,73 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using ToDoApp.Models;
+using ToDoApp.Services;
 using ToDoApp.Views;
 
 namespace ToDoApp.ViewModels;
 
-public partial class ProfilesViewModel : ObservableObject
+public partial class ProfilesViewModel : BaseViewModel
 {
-	[ObservableProperty] private ObservableCollection<Profile> _profiles;
+    private ProfilesService _profilesService;
 
-	public ProfilesViewModel()
-	{
-		_profiles = new ObservableCollection<Profile>();
-	}
+    private ObservableCollection<Profile>? _profiles = new();
 
-	public void AddProfile(string profileName)
-	{
-		Profile profile = new Profile { ID = Profiles.Count, Name = profileName };
-        Profiles.Add(profile);
-	}
+    public ObservableCollection<Profile>? Profiles => _profiles;
+
+    public ProfilesViewModel(ProfilesService service)
+    {
+        _profilesService = service;
+        LoadProfiles();
+    }
+
+    public void AddProfile(string profileName)
+    {
+        Profile profile = new Profile { ID = Profiles?.Count ?? 0, Name = profileName };
+        Profiles?.Add(profile);
+    }
 
     [RelayCommand]
     private void RemoveProfile(int id)
     {
-        for (int i = 0; i < Profiles.Count; i++)
-		{
-			if (Profiles[i].ID == id)
-			{
-				Profiles.RemoveAt(i);
-				return;
-			}
-		}
+        for (int i = 0; i < Profiles?.Count; i++)
+        {
+            if (Profiles[i].ID == id)
+            {
+                Profiles.RemoveAt(i);
+                return;
+            }
+        }
     }
 
-	[RelayCommand]
-	private async System.Threading.Tasks.Task OpenProfile(int profileID)
-	{
-		for (int i = 0; i < Profiles.Count; i++)
-		{
-			if (Profiles[i].ID == profileID)
-			{
+    private void LoadProfiles()
+    {
+        try
+        {
+            List<Profile> profiles = _profilesService.GetProfiles();
 
-				await Shell.Current.GoToAsync(nameof(TaskListPage), new Dictionary<string, object>
-				{
-					{ "profile", Profiles[i] }
-                });
+            Profiles?.Clear();
+            for (int i = 0; i < profiles.Count; i++)
+            {
+                Profiles?.Add(profiles[i]);
+            }
+        }
+        catch (Exception ex)
+        {
+            Shell.Current.DisplayAlert("Error!", $"Unable to get profiles: {ex.Message}", "OK");
+        }
+    }
 
+
+    [RelayCommand]
+    private async Task OpenProfile(int profileID)
+    {
+        for (int i = 0; i < Profiles?.Count; i++)
+        {
+            if (Profiles[i].ID == profileID)
+            {
+                await Shell.Current.GoToAsync(nameof(TasksPage), new Dictionary<string, object> { { "profile", Profiles[i] } });
                 break;
             }
         }
-	}
-}
-
-[Serializable]
-public class Profile
-{
-	public int ID { get; set; }
-	public string Name { get; set; } = string.Empty;
-
-	public List<Task> Tasks { get; set; } = new List<Task>();
+    }
 }

@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using ToDoApp.Services;
 using ToDoApp.ViewModels;
 using ToDoApp.Views;
 
@@ -18,19 +18,14 @@ namespace ToDoApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            _builder.Services.AddSingleton<ProfilesService>();
+            _builder.Services.AddSingleton<ProfilesViewModel>();
+            _builder.Services.AddSingleton<ProfilesPage>();
 
-            InitPage<TaskListPage, TaskListViewModel>(_builder.Services.AddSingleton);
-            InitPage<ProfilesPage, ProfilesViewModel>(_builder.Services.AddTransient);
+            _builder.Services.AddSingleton<TasksViewModel>();
+            _builder.Services.AddSingleton<TasksPage>();
 
             return _builder.Build();
-        }
-
-        private static void InitPage<T, S>(Func<Type, IServiceCollection> registerService)
-            where T : ContentPage
-            where S : ObservableObject
-        {
-            registerService(typeof(T));
-            registerService(typeof(S));
         }
     }
 }
