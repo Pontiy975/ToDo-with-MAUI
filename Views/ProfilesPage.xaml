@@ -8,15 +8,31 @@
              x:Class="ToDoApp.Views.ProfilesPage">
 
     <VerticalStackLayout Padding="30" Spacing="25">
-        <Border>
-            <Button Text="Add profile"
-                    Clicked="DisplayPrompt"
-                    Background="Transparent"
-                    TextColor="Black"
-                    FontSize="20"
-                    FontFamily="OpenSans-Semibold"
-                    HorizontalOptions="FillAndExpand"/>
-        </Border>
+        <Grid ColumnSpacing="15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Column="0" Grid.Row="0" Background="red">
+                <Button Text="Clear profiles"
+                        Clicked="ClearProfiles"
+                        Background="Transparent"
+                        TextColor="White"
+                        FontSize="20"
+                        FontFamily="OpenSans-Semibold"/>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="0">
+                <Button Text="Add profile"
+                        Clicked="DisplayPrompt"
+                        Background="Transparent"
+                        TextColor="Black"
+                        FontSize="20"
+                        FontFamily="OpenSans-Semibold"/>
+            </Border>
+        </Grid>
 
         <CollectionView ItemsSource="{Binding Profiles}">
             <CollectionView.ItemTemplate>

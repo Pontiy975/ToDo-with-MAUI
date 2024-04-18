@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Text;
 using System.Text.Json;
 using ToDoApp.Models;
 
@@ -27,7 +29,6 @@ namespace ToDoApp.Services
                     Debug.WriteLine($"ATTENTION!!! {ex.Message}");
                 }
             }
-
             else
             {
                 Directory.CreateDirectory($"{AppDomain.CurrentDomain.BaseDirectory}/Data");
@@ -35,6 +36,27 @@ namespace ToDoApp.Services
             }
 
             return _profiles;
+        }
+
+        public void SaveProfiles(ObservableCollection<Profile> profiles)
+        {
+            if (File.Exists(FILE_PATH))
+            {
+                string json = JsonSerializer.Serialize(profiles);
+                byte[] jsonBytes = Encoding.UTF8.GetBytes(json);
+
+                using FileStream fstream = File.OpenWrite(FILE_PATH);
+                fstream.Write(jsonBytes, 0, jsonBytes.Length);
+            }
+        }
+
+        public void ClearProfiles()
+        {
+            if (File.Exists(FILE_PATH))
+            {
+                using FileStream fstream = File.OpenWrite(FILE_PATH);
+                fstream.SetLength(0);
+            }
         }
     }
 }

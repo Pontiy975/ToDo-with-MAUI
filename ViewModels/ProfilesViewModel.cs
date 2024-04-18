@@ -24,6 +24,15 @@ public partial class ProfilesViewModel : BaseViewModel
     {
         Profile profile = new Profile { ID = Profiles?.Count ?? 0, Name = profileName };
         Profiles?.Add(profile);
+
+        if (Profiles != null)
+            _profilesService.SaveProfiles(Profiles);
+    }
+
+    public void ClearProfiles()
+    {
+        Profiles?.Clear();
+        _profilesService.ClearProfiles();
     }
 
     [RelayCommand]

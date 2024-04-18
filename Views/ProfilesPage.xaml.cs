@@ -19,5 +19,10 @@ namespace ToDoApp.Views
 
             ((ProfilesViewModel)BindingContext).AddProfile(profileName);
         }
+
+        private void ClearProfiles(object sender, EventArgs e)
+        {
+            ((ProfilesViewModel)BindingContext).ClearProfiles();
+        }
     }
 }
